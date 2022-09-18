@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Link, HStack, Image, Flex, Spacer, Heading, Text, Button } from '@chakra-ui/react'
 import { Link as ReactLink } from 'react-router-dom'
 import Logo from "../../assets/Logo.png";
+import "./navbar.css";
 
 export default function navbar () {
   return (
@@ -19,24 +20,36 @@ export default function navbar () {
                 <Spacer />
                 <HStack>
                 <Box p='2'>
-                    <Text pt='1' size='sm' color='#FFFFFF'> How it works </Text> 
+                    <Link as={ReactLink} to='/'>
+                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> How it works </Text> 
+                    </Link>
                 </Box>
                 <Box p='2'>
-                    <Text pt='1' size='sm' color='#FF6467'> • Who we are </Text> 
+                    <Link as={ReactLink} to='/who'>
+                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> • Who we are </Text> 
+                    </Link>
                 </Box>
                 <Box p='2'>
-                    <Text pt='1' size='sm' color='#FF6467'> • What we do </Text> 
+                    <Link as={ReactLink} to='/what'>
+                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> • What we do </Text> 
+                    </Link>
                 </Box>
                 <Box p='2'>
-                    <Text pt='1' size='sm' color='#FF6467'> • Contact us </Text> 
+                    <Link as={ReactLink} to='/contact'>
+                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> • Contact us </Text> 
+                    </Link> 
                 </Box>
                 </HStack>
                 <Spacer />
                 <HStack>
-                <Box bg='#FF6467' borderRadius='lg' w="100px" h="35px" pt="1" align="center"> 
-                <Button color="#FFFFFF"variant='link'> Connect </Button>
-                </Box>
-                {/* chakra ui don't support custom colored button :( */}
+                <Button
+				background="#FF6467"
+				size="md"
+				color="white"
+				m="auto"
+			>
+				Connect
+			</Button>
                 </HStack>
         </Flex>
   )
