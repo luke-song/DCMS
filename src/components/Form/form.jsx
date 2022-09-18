@@ -15,7 +15,12 @@ export default function form() {
 					<FormLabel color="white" fontWeight="bold">
 						Key:
 					</FormLabel>
-					<Input type="email" variant="filled" borderRadius={20} />
+					<Input
+						sx={{ ":focus": { background: "white" } }}
+						type="email"
+						variant="filled"
+						borderRadius={20}
+					/>
 				</div>
 				<Text fontWeight="bold" fontSize="2xl" mt={50} color="white">
 					:
@@ -24,7 +29,12 @@ export default function form() {
 					<FormLabel color="white" fontWeight="bold">
 						Value:
 					</FormLabel>
-					<Input type="email" variant="filled" borderRadius={20} />
+					<Input
+						sx={{ ":focus": { background: "white" } }}
+						type="email"
+						variant="filled"
+						borderRadius={20}
+					/>
 				</div>
 			</HStack>
 			<Button
