@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import Navbar from './components/Navbar/navbar';
+import Upload from './components/Upload/upload';
 
 const theme = extendTheme({
   fonts: {
@@ -17,7 +18,9 @@ const theme = extendTheme({
   },
   colors: {
     brand: {
+      50: '#FF6467',
       100: '#FF6467',
+      500: '#FF6467',
     },
   },
 });
@@ -27,12 +30,12 @@ export default function App() {
     <ChakraProvider theme={theme}>
       <Router>
         <Navbar />
-        {/* <Routes>
-            <Route path="/" element={<How />} />
-            <Route path="/who" element={<Who />} />
+        <Routes>
+            <Route path="/" element={<Upload />} />
+            {/* <Route path="/who" element={<Who />} />
             <Route path="/what" element={<What />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes> */}
+            <Route path="/contact" element={<Contact />} /> */}
+          </Routes>
       </Router>
     </ChakraProvider>
   );
