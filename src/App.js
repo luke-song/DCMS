@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import Navbar from './components/Navbar/navbar';
-import Upload from './components/Upload/upload';
-import Who from './components/Who/who';
-import What from './components/What/what';
-import Contact from './components/Contact/contact';
+import Navbar from './components/Navbar/Navbar';
+import Upload from './components/Upload/Upload';
+import Who from './components/Who/Who';
+import What from './components/What/What';
+import Contact from './components/Contact/Contact';
 
 const theme = extendTheme({
   fonts: {
