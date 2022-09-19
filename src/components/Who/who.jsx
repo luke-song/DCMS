@@ -1,6 +1,6 @@
 import { Box, Heading, Container, VStack, Stack } from "@chakra-ui/react";
 
-export default function who() {
+export default function Who() {
 	return (
 		<Box>
 			<Container mt={50} maxW="90%" display="flex">

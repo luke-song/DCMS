@@ -1,7 +1,7 @@
 import { Box, Heading, Container, VStack, Stack } from "@chakra-ui/react";
-import Form from "../Form/form";
+import Form from "../Form/Form";
 
-export default function upload() {
+export default function Upload() {
 	return (
 		<Box>
 			<Container mt={50} maxW="90%" display="flex">

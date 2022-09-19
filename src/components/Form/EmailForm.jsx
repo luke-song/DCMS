@@ -5,16 +5,16 @@ import {
 	HStack,
 	Text,
 	Button,
-    VStack,
+	VStack,
 } from "@chakra-ui/react";
 
-export default function form() {
+export default function EmailForm() {
 	return (
 		<FormControl textAlign="center">
 			<VStack align="left">
 				<div>
 					<FormLabel color="white" fontWeight="bold">
-					    Name:
+						Name:
 					</FormLabel>
 					<Input
 						sx={{ ":focus": { background: "white" } }}
@@ -23,9 +23,9 @@ export default function form() {
 						borderRadius={20}
 					/>
 				</div>
-                <div>
+				<div>
 					<FormLabel color="white" fontWeight="bold">
-					    Email:
+						Email:
 					</FormLabel>
 					<Input
 						sx={{ ":focus": { background: "white" } }}
@@ -34,9 +34,9 @@ export default function form() {
 						borderRadius={20}
 					/>
 				</div>
-                <div>
+				<div>
 					<FormLabel color="white" fontWeight="bold">
-					    Message:
+						Message:
 					</FormLabel>
 					<Input
 						sx={{ ":focus": { background: "white" } }}
@@ -45,17 +45,17 @@ export default function form() {
 						borderRadius={20}
 					/>
 				</div>
-			
-				
+
+
 			</VStack>
-			
+
 			<Button
 				background="#FF6467"
 				size="md"
 				color="white"
 				boxShadow="0 4px 4px 0px #000"
 				m="auto"
-                mt={5}
+				mt={5}
 			>
 				SEND
 			</Button>
