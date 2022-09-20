@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Link, HStack, Image, Flex, Spacer, Heading, Text, Button } from '@chakra-ui/react'
 import { Link as ReactLink } from 'react-router-dom'
 import Logo from "../../assets/Logo.png";
-import "./Navbar.css";
+import "./navbar.css";
 
 export default function Navbar() {
     return (

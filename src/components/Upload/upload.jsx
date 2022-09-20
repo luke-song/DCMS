@@ -1,5 +1,5 @@
 import { Box, Heading, Container, VStack, Stack, Flex, Spacer } from "@chakra-ui/react";
-import Form from "../Form/Form";
+import Form from "../Form/form";
 
 export default function Upload() {
 	return (
