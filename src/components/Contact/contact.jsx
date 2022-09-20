@@ -1,5 +1,5 @@
 import { Box, Heading, Container, VStack, Stack, Flex, Spacer } from "@chakra-ui/react";
-import Form from "../Form/EmailForm";
+import Form from "../Form/emailForm";
 
 export default function Contact() {
 	return (
