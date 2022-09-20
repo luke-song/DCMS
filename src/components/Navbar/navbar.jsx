@@ -3,8 +3,14 @@ import { Box, Link, HStack, Image, Flex, Spacer, Heading, Text, Button } from '@
 import { Link as ReactLink } from 'react-router-dom'
 import Logo from "../../assets/Logo.png";
 import "./Navbar.css";
+import { useMoralis } from "react-moralis"
 
 export default function Navbar() {
+    const {
+        authenticate,
+        isAuthenticated,
+        logout,
+    } = useMoralis()
     return (
         <Flex bg='#464549' pl='10' pr='10' >
             <HStack>
@@ -42,15 +48,27 @@ export default function Navbar() {
             </HStack>
             <Spacer />
             <HStack>
-                <Button
-                    background="#FF6467"
-                    size="md"
-                    color="white"
-                    m="auto"
-                >
-                    Connect
-                </Button>
+                {!isAuthenticated
+                    ? <Button
+                        background="#FF6467"
+                        size="md"
+                        color="white"
+                        m="auto"
+                        onClick={() => authenticate()}
+                    >
+                        Connect
+                    </Button>
+                    : <Button
+                        background="#FF6467"
+                        size="md"
+                        color="white"
+                        m="auto"
+                        onClick={() => logout()}
+                    >
+                        Disconnect
+                    </Button>
+                }
             </HStack>
-        </Flex>
+        </Flex >
     )
 }
