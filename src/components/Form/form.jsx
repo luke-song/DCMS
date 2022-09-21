@@ -5,50 +5,54 @@ import {
 	HStack,
 	Button,
 	Box,
-	Select
+	Select,
 } from "@chakra-ui/react";
-import React, { useState } from "react"
+import axios from "axios";
+import React, { useState } from "react";
 import InputType from "./inputType";
 
 const initialValues = {
 	parameter: "",
 	type: "",
 	value: "",
-	pairs: []
-}
-
+	pairs: [],
+};
 
 export default function Form() {
-	const [values, setValues] = useState(initialValues)
-	const [file, setFile] = useState()
-	const handleChange = e => {
-		const { name, value, files } = e.target
-		if (name != "type") {
+	const [values, setValues] = useState(initialValues);
+	const [file, setFile] = useState();
+	const handleChange = (e) => {
+		const { name, value, files } = e.target;
+		if (name !== "type") {
 			setValues({
 				...values,
-				[name]: value
-			})
+				[name]: value,
+			});
 		} else {
 			setValues({
 				...values,
 				[name]: value,
-				value: ""
-			})
+				value: "",
+			});
 		}
-		if (values.type == "File") {
-			setFile(files[0])
+		if (values.type === "File") {
+			if (files) setFile(files[0]);
 		}
-	}
-	const handleSubmit = e => {
-		e.preventDefault()
-		console.log(values)
-		console.log(file)
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		// setValues({
 		// 	parameter: "",
 		// 	value: "",
 		// 	pairs: []
 		// })
-	}
+		axios
+			.post("/upload", {
+				file: file,
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	};
 	return (
 		<div>
 			<form action="/" onSubmit={handleSubmit}>
@@ -63,7 +67,6 @@ export default function Form() {
 							onChange={handleChange}
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
-
 						/>
 					</FormControl>
 					<FormControl isRequired>
@@ -77,7 +80,9 @@ export default function Form() {
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
 						>
-							<option selected disabled value="">Select Type</option>
+							<option disabled value="">
+								Select Type
+							</option>
 							<option value="String">String</option>
 							<option value="Number">Number</option>
 							{/* <option value="array">Array</option>
@@ -90,7 +95,10 @@ export default function Form() {
 						<FormLabel color="white" fontWeight="bold">
 							Value:
 						</FormLabel>
-						<InputType values={values} handleChange={handleChange} />
+						<InputType
+							values={values}
+							handleChange={handleChange}
+						/>
 					</FormControl>
 				</HStack>
 				{/* <ul>
@@ -119,13 +127,12 @@ export default function Form() {
 						color="white"
 						boxShadow="0 4px 4px 0px #000"
 						my={5}
+						isDisabled={!values.parameter || !values.value}
 					>
 						UPLOAD
 					</Button>
 				</Box>
 			</form>
-		</div >
-
-
+		</div>
 	);
 }

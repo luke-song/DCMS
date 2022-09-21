@@ -1,11 +1,18 @@
-import { Box, Heading, Container, VStack, Stack, Flex, Spacer } from "@chakra-ui/react";
+import {
+	Box,
+	Heading,
+	Container,
+	VStack,
+	Flex,
+	Spacer,
+} from "@chakra-ui/react";
 import Form from "../Form/form";
 
 export default function Upload() {
 	return (
 		<Box>
 			<Container mt={50} maxW="90%" display="flex">
-				<Flex direction="row" w={"95%"} >
+				<Flex direction="row" w={"95%"}>
 					<VStack align="flex-start">
 						<Heading color="#FF6467" size="2xl">
 							Welcome, User
@@ -26,7 +33,14 @@ export default function Upload() {
 
 					<Spacer />
 
-					<VStack w={{ md: '50%' }} justify="center" spacing={3} bg="#464549" borderRadius={20} p={10}>
+					<VStack
+						w={{ md: "50%" }}
+						justify="center"
+						spacing={3}
+						bg="#464549"
+						borderRadius={20}
+						p={10}
+					>
 						<Heading color="#FF6467" size="md">
 							Upload Your Content
 						</Heading>
