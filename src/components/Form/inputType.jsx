@@ -1,21 +1,18 @@
-import {
-    Input,
-} from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 
 export default function InputType(props) {
-    const { values, handleChange } = props
-    let styles = {}
-    if (values.type == "File") {
+    const { values, handleChange } = props;
+    let styles = {};
+    if (values.type === "File") {
         styles = {
             bg: "white",
             variant: "unstyled",
-        }
-    }
-    else {
+        };
+    } else {
         styles = {
             sx: { ":focus": { bg: "white" } },
-            variant: "filled"
-        }
+            variant: "filled",
+        };
     }
     return (
         <Input

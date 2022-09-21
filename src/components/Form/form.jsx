@@ -5,50 +5,60 @@ import {
 	HStack,
 	Button,
 	Box,
-	Select
+	Select,
+	VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react"
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import InputType from "./inputType";
+import { Buffer } from "buffer";
+import { connect } from "@tableland/sdk";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { formState, fileState, jsonState, hashCode } from "../Atom/atom";
 
-const initialValues = {
-	parameter: "",
-	type: "",
-	value: "",
-	pairs: []
-}
-
+window.Buffer = Buffer;
 
 export default function Form() {
-	const [values, setValues] = useState(initialValues)
-	const [file, setFile] = useState()
-	const handleChange = e => {
-		const { name, value, files } = e.target
-		if (name != "type") {
+	const [values, setValues] = useRecoilState(formState);
+	const [file, setFile] = useRecoilState(fileState);
+	const [fileLink, setFileLink] = useState("");
+	const handleChange = (e) => {
+		const { name, value, files } = e.target;
+		if (name !== "type") {
 			setValues({
 				...values,
-				[name]: value
-			})
+				[name]: value,
+			});
 		} else {
 			setValues({
 				...values,
 				[name]: value,
-				value: ""
-			})
+				value: "",
+			});
 		}
-		if (values.type == "File") {
-			setFile(files[0])
+		if (values.type === "File") {
+			if (files) setFile(files[0]);
 		}
-	}
-	const handleSubmit = e => {
-		e.preventDefault()
-		console.log(values)
-		console.log(file)
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		// setValues({
 		// 	parameter: "",
 		// 	value: "",
 		// 	pairs: []
 		// })
-	}
+		if (file) {
+			axios
+				.post(
+					"https://filecoin-uploader.herokuapp.com/uploads/upload",
+					{
+						file: file,
+					}
+				)
+				.then((res) => setFileLink(res))
+				.catch((err) => console.log(err));
+		}
+	};
 	return (
 		<div>
 			<form action="/" onSubmit={handleSubmit}>
@@ -63,7 +73,6 @@ export default function Form() {
 							onChange={handleChange}
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
-
 						/>
 					</FormControl>
 					<FormControl isRequired>
@@ -77,7 +86,9 @@ export default function Form() {
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
 						>
-							<option selected disabled value="">Select Type</option>
+							<option disabled value="">
+								Select Type
+							</option>
 							<option value="String">String</option>
 							<option value="Number">Number</option>
 							{/* <option value="array">Array</option>
@@ -90,7 +101,10 @@ export default function Form() {
 						<FormLabel color="white" fontWeight="bold">
 							Value:
 						</FormLabel>
-						<InputType values={values} handleChange={handleChange} />
+						<InputType
+							values={values}
+							handleChange={handleChange}
+						/>
 					</FormControl>
 				</HStack>
 				{/* <ul>
@@ -111,7 +125,8 @@ export default function Form() {
 					+
 				</Button> */}
 				<Box textAlign="center">
-					<Button
+					{/* <VStack> */}
+					{/* <Button
 						type="submit"
 						title="Submit to Filecoin"
 						background="#FF6467"
@@ -119,13 +134,70 @@ export default function Form() {
 						color="white"
 						boxShadow="0 4px 4px 0px #000"
 						my={5}
+						isDisabled={!values.parameter || !values.value}
+					>
+						UPLOAD
+					</Button> */}
+					<Button
+						type="submit"
+						title="Save to Tableland"
+						background="#FF6467"
+						size="md"
+						color="white"
+						boxShadow="0 4px 4px 0px #000"
+						my={5}
+						isDisabled={!values.parameter || !values.value}
+						onClick={ConnectTableland().connect}
 					>
 						UPLOAD
 					</Button>
+					{/* </VStack> */}
 				</Box>
 			</form>
-		</div >
-
-
+		</div>
 	);
+}
+
+export function ConnectTableland() {
+	const values = useRecoilValue(formState);
+
+	const setJsonData = useSetRecoilState(jsonState);
+
+	const setHash = useSetRecoilState(hashCode);
+
+	// console.log(values.parameter, values.value, values.type);
+
+	return {
+		async connect() {
+			const tableland = await connect({
+				network: "testnet",
+				chain: "polygon-mumbai",
+			});
+
+			await tableland.siwe();
+
+			const { name } = await tableland.create(
+				`parameter text primary key, type text, value text`,
+				{
+					prefix: `my_cms_table`,
+				}
+			);
+
+			console.log(name);
+
+			const writeRes = await tableland.write(
+				`INSERT INTO ${name} (parameter, type, value) VALUES ('${values.parameter}', '${values.type}', '${values.value}');`
+			);
+
+			console.log(writeRes);
+
+			setHash(writeRes);
+
+			const readRes = await tableland.read(`SELECT * FROM ${name};`);
+
+			console.log(readRes);
+
+			setJsonData(readRes);
+		},
+	};
 }
