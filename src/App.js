@@ -14,10 +14,10 @@ const theme = extendTheme({
     body: `Work Sans, sans-serif`,
   },
   breakpoints: {
-    sm: '30em',
-    md: '48em',
-    lg: '62em',
-    xl: '80em',
+    sm: '48em',
+    md: '62em',
+    lg: '80em',
+    xl: '102em',
   },
   colors: {
     brand: {

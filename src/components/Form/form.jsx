@@ -3,15 +3,17 @@ import {
 	FormLabel,
 	Input,
 	HStack,
-	Text,
 	Button,
-	Box
+	Box,
+	Select
 } from "@chakra-ui/react";
 import React, { useState } from "react"
+import InputType from "./inputType";
 
 const initialValues = {
-	key: "",
-	value: "",
+	parameter: "",
+	type: "",
+	value: null,
 	pairs: []
 }
 
@@ -20,24 +22,33 @@ export default function Form() {
 	const [values, setValues] = useState(initialValues)
 	const handleChange = e => {
 		const { name, value } = e.target
-		setValues({
-			...values,
-			[name]: value
-		})
+		if (name != "type") {
+			setValues({
+				...values,
+				[name]: value
+			})
+		}
+		else {
+			setValues({
+				...values,
+				[name]: value,
+				value: null
+			})
+		}
 	}
 	const handleSubmit = e => {
 		e.preventDefault()
-		const newPair = { key: values.key, value: values.value }
+		const newPair = { parameter: values.parameter, value: values.value }
 		setValues((prevState) => ({
 			pairs: [...prevState.pairs, newPair],
-			key: "",
+			parameter: "",
 			value: ""
 		}))
 	}
 	const handleUpload = e => {
 		e.preventDefault()
 		setValues({
-			key: "",
+			parameter: "",
 			value: "",
 			pairs: []
 		})
@@ -48,44 +59,52 @@ export default function Form() {
 				<HStack>
 					<FormControl isRequired>
 						<FormLabel color="white" fontWeight="bold">
-							Key:
+							Parameter:
 						</FormLabel>
 						<Input
-							name="key"
-							value={values.key}
+							name="parameter"
+							value={values.parameter}
 							onChange={handleChange}
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
-							borderRadius={20}
+
 						/>
 					</FormControl>
-					<Box pt={25}>
-						<Text fontWeight="bold" fontSize="2xl" color="white">
-							:
-						</Text>
-					</Box>
+					<FormControl isRequired>
+						<FormLabel color="white" fontWeight="bold">
+							Type:
+						</FormLabel>
+						<Select
+							name="type"
+							value={values.type}
+							onChange={handleChange}
+							sx={{ ":focus": { background: "white" } }}
+							variant="filled"
+						>
+							<option selected disabled value="">Select Type</option>
+							<option value="text">String</option>
+							<option value="number">Number</option>
+							{/* <option value="array">Array</option>
+							<option value="map">Map</option>
+							<option value="sset">Set</option> */}
+							<option value="file">File</option>
+						</Select>
+					</FormControl>
 					<FormControl isRequired>
 						<FormLabel color="white" fontWeight="bold">
 							Value:
 						</FormLabel>
-						<Input
-							name="value"
-							value={values.value}
-							onChange={handleChange}
-							sx={{ ":focus": { background: "white" } }}
-							variant="filled"
-							borderRadius={20}
-						/>
+						<InputType values={values} handleChange={handleChange} />
 					</FormControl>
 				</HStack>
 				<ul>
 					{values.pairs.map(pair => (
-						<li key={pair.key}>{pair.key} : {pair.value}</li>
+						<li parameter={pair.parameter}>{pair.parameter} : {pair.value}</li>
 					))}
 				</ul>
 				<Button
 					type="submit"
-					title="Add a key-value pair"
+					title="Add a parameter-value pair"
 					bg="#FF6467"
 					color="white"
 					ml={"90%"}

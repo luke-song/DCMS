@@ -26,7 +26,7 @@ export default function Upload() {
 
 					<Spacer />
 
-					<VStack w={{ md: '55%' }} justify="center" spacing={3} bg="#464549" borderRadius={20} p={20}>
+					<VStack w={{ md: '50%' }} justify="center" spacing={3} bg="#464549" borderRadius={20} p={10}>
 						<Heading color="#FF6467" size="md">
 							Upload Your Content
 						</Heading>
