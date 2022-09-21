@@ -1,12 +1,12 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import Navbar from './components/Navbar/navbar';
-import Upload from './components/Upload/upload';
-import Who from './components/Who/who';
-import What from './components/What/what';
-import Contact from './components/Contact/contact';
+import React from 'react'
+import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import Navbar from './components/Navbar/navbar'
+import Upload from './components/Upload/upload'
+import Who from './components/Who/who'
+import What from './components/What/what'
+import Contact from './components/Contact/contact'
 
 const theme = extendTheme({
   fonts: {
@@ -26,7 +26,7 @@ const theme = extendTheme({
       500: '#FF6467',
     },
   },
-});
+})
 
 export default function App() {
   return (
@@ -41,5 +41,5 @@ export default function App() {
         </Routes>
       </Router>
     </ChakraProvider>
-  );
+  )
 }
