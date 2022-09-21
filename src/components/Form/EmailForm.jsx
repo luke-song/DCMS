@@ -25,7 +25,7 @@ export default function EmailForm() {
 	};
 	return (
 		<form ref={form} onSubmit={sendEmail}>
-			<FormControl textAlign="center">
+			<FormControl textAlign="center" size="sm">
 				<VStack align="left">
 					<div>
 						<FormLabel color="white" fontWeight="bold">
@@ -37,7 +37,6 @@ export default function EmailForm() {
 							sx={{ ":focus": { background: "white" } }}
 							type="text"
 							variant="filled"
-							borderRadius={20}
 						/>
 					</div>
 					<div>
@@ -50,7 +49,6 @@ export default function EmailForm() {
 							sx={{ ":focus": { background: "white" } }}
 							type="email"
 							variant="filled"
-							borderRadius={20}
 						/>
 					</div>
 					<div>
@@ -63,7 +61,6 @@ export default function EmailForm() {
 							sx={{ ":focus": { background: "white" } }}
 							type="email"
 							variant="filled"
-							borderRadius={10}
 						/>
 					</div>
 				</VStack>
