@@ -9,24 +9,18 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputType from "./inputType";
 import { Buffer } from "buffer";
 import { connect } from "@tableland/sdk";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { formState, fileState, jsonState, hashCode } from "../Atom/atom";
 
 window.Buffer = Buffer;
 
-const initialValues = {
-	parameter: "",
-	type: "",
-	value: "",
-	pairs: [],
-};
-
 export default function Form() {
-	const [values, setValues] = useState(initialValues);
-	const [file, setFile] = useState();
-	const [fileLink, setFileLink] = useState("");
+	const [values, setValues] = useRecoilState(formState);
+	const [file, setFile] = useRecoilState(fileState);
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
 		if (name !== "type") {
@@ -130,43 +124,49 @@ export default function Form() {
 					+
 				</Button> */}
 				<Box textAlign="center">
-					<VStack>
-						<Button
-							type="submit"
-							title="Submit to Filecoin"
-							background="#FF6467"
-							size="md"
-							color="white"
-							boxShadow="0 4px 4px 0px #000"
-							my={5}
-							isDisabled={!values.parameter || !values.value}
-						>
-							UPLOAD
-						</Button>
-						<Button
-							type="submit"
-							title="Save to Tableland"
-							background="#FF6467"
-							size="md"
-							color="white"
-							boxShadow="0 4px 4px 0px #000"
-							my={5}
-							isDisabled={!values.parameter || !values.value}
-							onClick={ConnectTableland().connect}
-						>
-							Save on chain
-						</Button>
-					</VStack>
+					{/* <VStack> */}
+					{/* <Button
+						type="submit"
+						title="Submit to Filecoin"
+						background="#FF6467"
+						size="md"
+						color="white"
+						boxShadow="0 4px 4px 0px #000"
+						my={5}
+						isDisabled={!values.parameter || !values.value}
+					>
+						UPLOAD
+					</Button> */}
+					<Button
+						type="submit"
+						title="Save to Tableland"
+						background="#FF6467"
+						size="md"
+						color="white"
+						boxShadow="0 4px 4px 0px #000"
+						my={5}
+						isDisabled={!values.parameter || !values.value}
+						onClick={ConnectTableland().connect}
+					>
+						UPLOAD
+					</Button>
+					{/* </VStack> */}
 				</Box>
 			</form>
 		</div>
 	);
 }
 
-function ConnectTableland() {
-	const [subscribe, setSubscribe] = useState();
+export function ConnectTableland() {
+	const values = useRecoilValue(formState);
+
+	const setJsonData = useSetRecoilState(jsonState);
+
+	const setHash = useSetRecoilState(hashCode);
+
+	// console.log(values.parameter, values.value, values.type);
+
 	return {
-		subscribe,
 		async connect() {
 			const tableland = await connect({
 				network: "testnet",
@@ -174,26 +174,29 @@ function ConnectTableland() {
 			});
 
 			await tableland.siwe();
-			setSubscribe(tableland.subscribe);
 
 			const { name } = await tableland.create(
-				`id integer primary key, name text`, // Table schema definition
+				`parameter text primary key, type text, value text`,
 				{
-					prefix: `my_sdk_table`, // Optional `prefix` used to define a human-readable string
+					prefix: `my_cms_table`,
 				}
 			);
 
 			console.log(name);
 
 			const writeRes = await tableland.write(
-				`INSERT INTO ${name} (id, name) VALUES (0, 'Bobby Tables');`
+				`INSERT INTO ${name} (parameter, type, value) VALUES ('${values.parameter}', '${values.type}', '${values.value}');`
 			);
 
 			console.log(writeRes);
 
+			setHash(writeRes);
+
 			const readRes = await tableland.read(`SELECT * FROM ${name};`);
 
 			console.log(readRes);
+
+			setJsonData(readRes);
 		},
 	};
 }

@@ -3,7 +3,7 @@ import { Input } from "@chakra-ui/react";
 export default function InputType(props) {
 	const { values, handleChange } = props;
 	let styles = {};
-	if (values.type === "file") {
+	if (values.type === "File") {
 		styles = {
 			bg: "white",
 			variant: "unstyled",
