@@ -124,8 +124,8 @@ export default function Form() {
 					+
 				</Button> */}
 				<Box textAlign="center">
-                    <VStack>
-					<Button
+                    {/* <VStack> */}
+					{/* <Button
 						type="submit"
 						title="Submit to Filecoin"
 						background="#FF6467"
@@ -136,7 +136,7 @@ export default function Form() {
 						isDisabled={!values.parameter || !values.value}
 					>
 						UPLOAD
-					</Button>
+					</Button> */}
                     <Button
 						type="submit"
 						title="Save to Tableland"
@@ -148,9 +148,9 @@ export default function Form() {
 						isDisabled={!values.parameter || !values.value}
                         onClick={ConnectTableland().connect}
 					>
-						Save on chain 
+						UPLOAD 
 					</Button>
-                    </VStack>
+                    {/* </VStack> */}
 				</Box>
 			</form>
 		</div>
