@@ -158,9 +158,7 @@ export default function Form() {
 }
 
 function ConnectTableland() {
-    const [subscribe, setSubscribe] = useState();
     return {
-      subscribe,
       async connect() {
         const tableland = await connect({
           network: 'testnet',
@@ -168,19 +166,18 @@ function ConnectTableland() {
         });
   
         await tableland.siwe();
-        setSubscribe(tableland.subscribe);
   
         const { name } = await tableland.create(
-          `id integer primary key, name text`, // Table schema definition
+          `parameter text primary key, type text, value text`, // Table schema definition
           {
-            prefix: `my_sdk_table`, // Optional `prefix` used to define a human-readable string
+            prefix: `my_cms_table`, // Optional `prefix` used to define a human-readable string
           }
         );
   
         console.log(name);
   
         const writeRes = await tableland.write(
-          `INSERT INTO ${name} (id, name) VALUES (0, 'Bobby Tables');`
+          `INSERT INTO ${name} (parameter, type, value) VALUES ('count', 'number', '1');`
         );
   
         console.log(writeRes);
