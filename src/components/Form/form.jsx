@@ -13,45 +13,41 @@ import InputType from "./inputType";
 const initialValues = {
 	parameter: "",
 	type: "",
-	value: null,
+	value: "",
 	pairs: []
 }
 
 
 export default function Form() {
 	const [values, setValues] = useState(initialValues)
+	const [file, setFile] = useState()
 	const handleChange = e => {
-		const { name, value } = e.target
+		const { name, value, files } = e.target
 		if (name != "type") {
 			setValues({
 				...values,
 				[name]: value
 			})
-		}
-		else {
+		} else {
 			setValues({
 				...values,
 				[name]: value,
-				value: null
+				value: ""
 			})
+		}
+		if (values.type == "File") {
+			setFile(files[0])
 		}
 	}
 	const handleSubmit = e => {
 		e.preventDefault()
-		const newPair = { parameter: values.parameter, value: values.value }
-		setValues((prevState) => ({
-			pairs: [...prevState.pairs, newPair],
-			parameter: "",
-			value: ""
-		}))
-	}
-	const handleUpload = e => {
-		e.preventDefault()
-		setValues({
-			parameter: "",
-			value: "",
-			pairs: []
-		})
+		console.log(values)
+		console.log(file)
+		// setValues({
+		// 	parameter: "",
+		// 	value: "",
+		// 	pairs: []
+		// })
 	}
 	return (
 		<div>
@@ -82,12 +78,12 @@ export default function Form() {
 							variant="filled"
 						>
 							<option selected disabled value="">Select Type</option>
-							<option value="text">String</option>
-							<option value="number">Number</option>
+							<option value="String">String</option>
+							<option value="Number">Number</option>
 							{/* <option value="array">Array</option>
 							<option value="map">Map</option>
 							<option value="sset">Set</option> */}
-							<option value="file">File</option>
+							<option value="File">File</option>
 						</Select>
 					</FormControl>
 					<FormControl isRequired>
@@ -97,7 +93,7 @@ export default function Form() {
 						<InputType values={values} handleChange={handleChange} />
 					</FormControl>
 				</HStack>
-				<ul>
+				{/* <ul>
 					{values.pairs.map(pair => (
 						<li parameter={pair.parameter}>{pair.parameter} : {pair.value}</li>
 					))}
@@ -113,10 +109,8 @@ export default function Form() {
 					fontSize="lg"
 				>
 					+
-				</Button>
-			</form>
-			<Box textAlign="center">
-				<form action="/" onSubmit={handleUpload}>
+				</Button> */}
+				<Box textAlign="center">
 					<Button
 						type="submit"
 						title="Submit to Filecoin"
@@ -124,13 +118,13 @@ export default function Form() {
 						size="md"
 						color="white"
 						boxShadow="0 4px 4px 0px #000"
-						m="auto"
+						my={5}
 					>
 						UPLOAD
 					</Button>
-				</form>
-			</Box>
-		</div>
+				</Box>
+			</form>
+		</div >
 
 
 	);
