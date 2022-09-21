@@ -21,6 +21,7 @@ window.Buffer = Buffer;
 export default function Form() {
 	const [values, setValues] = useRecoilState(formState);
 	const [file, setFile] = useRecoilState(fileState);
+	const [fileLink, setFileLink] = useState("");
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
 		if (name !== "type") {
