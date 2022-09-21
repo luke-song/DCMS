@@ -5,10 +5,19 @@ import {
 	VStack,
 	Flex,
 	Spacer,
+    Text,
 } from "@chakra-ui/react";
 import Form from "../Form/form";
+// import { useState, useEffect } from "react";
+// import { ConnectTableland } from "../Form/form";
 
-export default function Upload() {
+export default function Upload() {  
+    // const [tablelandData, setTablelandData] = useState([{}]);
+
+    // useEffect(() => {
+    //         setTablelandData(ConnectTableland().connect.readRes);
+    // }, [setTablelandData]);
+
 	return (
 		<Box>
 			<Container mt={50} maxW="90%" display="flex">
@@ -50,6 +59,10 @@ export default function Upload() {
 					</VStack>
 				</Flex>
 			</Container>
+            
+            {/* <Heading color="#000000" size="xl">		
+                JSON data: {JSON.stringify(tablelandData)}
+            </Heading> */}
 		</Box>
 	);
 }

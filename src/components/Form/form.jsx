@@ -9,23 +9,19 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputType from "./inputType";
 import { Buffer } from 'buffer';
 import { connect } from '@tableland/sdk';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { formState, fileState } from "../Atom/atom";
+
 
 window.Buffer = Buffer;
 
-const initialValues = {
-	parameter: "",
-	type: "",
-	value: "",
-	pairs: [],
-};
-
 export default function Form() {
-	const [values, setValues] = useState(initialValues);
-	const [file, setFile] = useState();
+    const [values, setValues] = useRecoilState(formState);
+	const [file, setFile] = useRecoilState(fileState);
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
 		if (name !== "type") {
@@ -157,7 +153,12 @@ export default function Form() {
 	);
 }
 
-function ConnectTableland() {
+export function ConnectTableland() {
+
+    const values = useRecoilValue(formState);
+
+    // console.log(values.parameter, values.value, values.type);
+
     return {
       async connect() {
         const tableland = await connect({
@@ -177,7 +178,7 @@ function ConnectTableland() {
         console.log(name);
   
         const writeRes = await tableland.write(
-          `INSERT INTO ${name} (parameter, type, value) VALUES ('count', 'number', '1');`
+          `INSERT INTO ${name} (parameter, type, value) VALUES ('${values.parameter}', '${values.type}', '${values.value}');`
         );
   
         console.log(writeRes);
