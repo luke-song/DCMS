@@ -28,3 +28,17 @@ export const jsonState = atom({
     },
   ],
 });
+
+export const isLoading = atom({
+  key: 'isLoading',
+  default: false,
+});
+
+export const hashCode = atom({
+  key: 'hashCode',
+  default: [
+    {
+      hash: '',
+    },
+  ],
+});

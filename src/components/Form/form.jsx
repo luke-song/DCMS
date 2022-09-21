@@ -14,7 +14,7 @@ import InputType from "./inputType";
 import { Buffer } from 'buffer';
 import { connect } from '@tableland/sdk';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { formState, fileState, jsonState } from "../Atom/atom";
+import { formState, fileState, jsonState, hashCode } from "../Atom/atom";
 
 
 window.Buffer = Buffer;
@@ -159,6 +159,8 @@ export function ConnectTableland() {
 
     const setJsonData = useSetRecoilState(jsonState);
 
+    const setHash = useSetRecoilState(hashCode);
+
     // console.log(values.parameter, values.value, values.type);
 
     return {
@@ -184,6 +186,8 @@ export function ConnectTableland() {
         );
   
         console.log(writeRes);
+
+        setHash(writeRes);
   
         const readRes = await tableland.read(`SELECT * FROM ${name};`);
   
