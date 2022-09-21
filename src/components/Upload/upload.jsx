@@ -8,15 +8,14 @@ import {
     Text,
 } from "@chakra-ui/react";
 import Form from "../Form/form";
-// import { useState, useEffect } from "react";
-// import { ConnectTableland } from "../Form/form";
+import { useRecoilValue } from "recoil";
+import { jsonState } from "../Atom/atom";
+
+
 
 export default function Upload() {  
-    // const [tablelandData, setTablelandData] = useState([{}]);
-
-    // useEffect(() => {
-    //         setTablelandData(ConnectTableland().connect.readRes);
-    // }, [setTablelandData]);
+    
+    const jsonData = useRecoilValue(jsonState);
 
 	return (
 		<Box>
@@ -60,9 +59,9 @@ export default function Upload() {
 				</Flex>
 			</Container>
             
-            {/* <Heading color="#000000" size="xl">		
-                JSON data: {JSON.stringify(tablelandData)}
-            </Heading> */}
+            <Heading color="#000000" size="xl">		
+                JSON data: {JSON.stringify(jsonData)}
+            </Heading>
 		</Box>
 	);
 }

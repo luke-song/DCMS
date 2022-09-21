@@ -13,8 +13,8 @@ import React, { useState, useEffect } from "react";
 import InputType from "./inputType";
 import { Buffer } from 'buffer';
 import { connect } from '@tableland/sdk';
-import { useRecoilState, useRecoilValue } from "recoil";
-import { formState, fileState } from "../Atom/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { formState, fileState, jsonState } from "../Atom/atom";
 
 
 window.Buffer = Buffer;
@@ -157,6 +157,8 @@ export function ConnectTableland() {
 
     const values = useRecoilValue(formState);
 
+    const setJsonData = useSetRecoilState(jsonState);
+
     // console.log(values.parameter, values.value, values.type);
 
     return {
@@ -169,9 +171,9 @@ export function ConnectTableland() {
         await tableland.siwe();
   
         const { name } = await tableland.create(
-          `parameter text primary key, type text, value text`, // Table schema definition
+          `parameter text primary key, type text, value text`, 
           {
-            prefix: `my_cms_table`, // Optional `prefix` used to define a human-readable string
+            prefix: `my_cms_table`, 
           }
         );
   
@@ -186,6 +188,8 @@ export function ConnectTableland() {
         const readRes = await tableland.read(`SELECT * FROM ${name};`);
   
         console.log(readRes);
+
+        setJsonData(readRes);
       },
     };
   }
