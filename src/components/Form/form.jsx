@@ -6,13 +6,13 @@ import {
 	Button,
 	Box,
 	Select,
-    VStack,
+	VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import InputType from "./inputType";
-import { Buffer } from 'buffer';
-import { connect } from '@tableland/sdk';
+import { Buffer } from "buffer";
+import { connect } from "@tableland/sdk";
 
 window.Buffer = Buffer;
 
@@ -26,6 +26,7 @@ const initialValues = {
 export default function Form() {
 	const [values, setValues] = useState(initialValues);
 	const [file, setFile] = useState();
+	const [fileLink, setFileLink] = useState("");
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
 		if (name !== "type") {
@@ -51,12 +52,17 @@ export default function Form() {
 		// 	value: "",
 		// 	pairs: []
 		// })
-		axios
-			.post("/upload", {
-				file: file,
-			})
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+		if (file) {
+			axios
+				.post(
+					"https://filecoin-uploader.herokuapp.com/uploads/upload",
+					{
+						file: file,
+					}
+				)
+				.then((res) => setFileLink(res))
+				.catch((err) => console.log(err));
+		}
 	};
 	return (
 		<div>
@@ -124,33 +130,33 @@ export default function Form() {
 					+
 				</Button> */}
 				<Box textAlign="center">
-                    <VStack>
-					<Button
-						type="submit"
-						title="Submit to Filecoin"
-						background="#FF6467"
-						size="md"
-						color="white"
-						boxShadow="0 4px 4px 0px #000"
-						my={5}
-						isDisabled={!values.parameter || !values.value}
-					>
-						UPLOAD
-					</Button>
-                    <Button
-						type="submit"
-						title="Save to Tableland"
-						background="#FF6467"
-						size="md"
-						color="white"
-						boxShadow="0 4px 4px 0px #000"
-						my={5}
-						isDisabled={!values.parameter || !values.value}
-                        onClick={ConnectTableland().connect}
-					>
-						Save on chain 
-					</Button>
-                    </VStack>
+					<VStack>
+						<Button
+							type="submit"
+							title="Submit to Filecoin"
+							background="#FF6467"
+							size="md"
+							color="white"
+							boxShadow="0 4px 4px 0px #000"
+							my={5}
+							isDisabled={!values.parameter || !values.value}
+						>
+							UPLOAD
+						</Button>
+						<Button
+							type="submit"
+							title="Save to Tableland"
+							background="#FF6467"
+							size="md"
+							color="white"
+							boxShadow="0 4px 4px 0px #000"
+							my={5}
+							isDisabled={!values.parameter || !values.value}
+							onClick={ConnectTableland().connect}
+						>
+							Save on chain
+						</Button>
+					</VStack>
 				</Box>
 			</form>
 		</div>
@@ -158,36 +164,36 @@ export default function Form() {
 }
 
 function ConnectTableland() {
-    const [subscribe, setSubscribe] = useState();
-    return {
-      subscribe,
-      async connect() {
-        const tableland = await connect({
-          network: 'testnet',
-          chain: 'polygon-mumbai',
-        });
-  
-        await tableland.siwe();
-        setSubscribe(tableland.subscribe);
-  
-        const { name } = await tableland.create(
-          `id integer primary key, name text`, // Table schema definition
-          {
-            prefix: `my_sdk_table`, // Optional `prefix` used to define a human-readable string
-          }
-        );
-  
-        console.log(name);
-  
-        const writeRes = await tableland.write(
-          `INSERT INTO ${name} (id, name) VALUES (0, 'Bobby Tables');`
-        );
-  
-        console.log(writeRes);
-  
-        const readRes = await tableland.read(`SELECT * FROM ${name};`);
-  
-        console.log(readRes);
-      },
-    };
-  }
+	const [subscribe, setSubscribe] = useState();
+	return {
+		subscribe,
+		async connect() {
+			const tableland = await connect({
+				network: "testnet",
+				chain: "polygon-mumbai",
+			});
+
+			await tableland.siwe();
+			setSubscribe(tableland.subscribe);
+
+			const { name } = await tableland.create(
+				`id integer primary key, name text`, // Table schema definition
+				{
+					prefix: `my_sdk_table`, // Optional `prefix` used to define a human-readable string
+				}
+			);
+
+			console.log(name);
+
+			const writeRes = await tableland.write(
+				`INSERT INTO ${name} (id, name) VALUES (0, 'Bobby Tables');`
+			);
+
+			console.log(writeRes);
+
+			const readRes = await tableland.read(`SELECT * FROM ${name};`);
+
+			console.log(readRes);
+		},
+	};
+}
