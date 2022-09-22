@@ -186,7 +186,10 @@ export default function Who() {
             Jimin Song
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests?
+            Software Engineer.
+          </h1>
+          <h1>
+           A data-enthusiastic and highly motivated engineer
           </h1>
         </Container>
         <Image
