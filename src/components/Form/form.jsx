@@ -6,24 +6,31 @@ import {
 	Button,
 	Box,
 	Select,
-} from "@chakra-ui/react";
-import axios from "axios";
-import React, { useState } from "react";
-import InputType from "./inputType";
-import { Buffer } from "buffer";
-import { connect } from "@tableland/sdk";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { formState, fileState, jsonState, hashCode } from "../Atom/atom";
+	VStack,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import InputType from './inputType';
+import { Buffer } from 'buffer';
+import { connect } from '@tableland/sdk';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+	formState,
+	fileState,
+	jsonState,
+	hashCode,
+	fileUriState,
+} from '../Atom/atom';
 
 window.Buffer = Buffer;
 
 export default function Form() {
 	const [values, setValues] = useRecoilState(formState);
 	const [file, setFile] = useRecoilState(fileState);
-	const [fileLink, setFileLink] = useState("");
+	const [fileLink, setFileLink] = useRecoilState(fileUriState);
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
-		if (name !== "type") {
+		if (name !== 'type') {
 			setValues({
 				...values,
 				[name]: value,
@@ -32,10 +39,10 @@ export default function Form() {
 			setValues({
 				...values,
 				[name]: value,
-				value: "",
+				value: '',
 			});
 		}
-		if (values.type === "File") {
+		if (values.type === 'File') {
 			if (files) setFile(files[0]);
 		}
 	};
@@ -45,11 +52,10 @@ export default function Form() {
 			parameter: "",
 			value: "",
 		})
-		setFile(false)
 		if (file) {
 			axios
 				.post(
-					"https://filecoin-uploader.herokuapp.com/uploads/upload",
+					'https://filecoin-uploader.herokuapp.com/uploads/upload',
 					{
 						file: file,
 					}
@@ -60,30 +66,30 @@ export default function Form() {
 	};
 	return (
 		<div>
-			<form action="/" onSubmit={handleSubmit}>
+			<form action='/' onSubmit={handleSubmit}>
 				<HStack>
 					<FormControl isRequired>
-						<FormLabel color="white" fontWeight="bold">
+						<FormLabel color='white' fontWeight='bold'>
 							Parameter:
 						</FormLabel>
 						<Input
-							name="parameter"
+							name='parameter'
 							value={values.parameter}
 							onChange={handleChange}
-							sx={{ ":focus": { background: "white" } }}
-							variant="filled"
+							sx={{ ':focus': { background: 'white' } }}
+							variant='filled'
 						/>
 					</FormControl>
 					<FormControl isRequired>
-						<FormLabel color="white" fontWeight="bold">
+						<FormLabel color='white' fontWeight='bold'>
 							Type:
 						</FormLabel>
 						<Select
-							name="type"
+							name='type'
 							value={values.type}
 							onChange={handleChange}
-							sx={{ ":focus": { background: "white" } }}
-							variant="filled"
+							sx={{ ':focus': { background: 'white' } }}
+							variant='filled'
 						>
 							<option disabled selected value="">Select Type</option>
 							<option value="String">String</option>
@@ -91,11 +97,11 @@ export default function Form() {
 							{/* <option value="array">Array</option>
 							<option value="map">Map</option>
 							<option value="sset">Set</option> */}
-							<option value="File">File</option>
+							<option value='File'>File</option>
 						</Select>
 					</FormControl>
 					<FormControl isRequired>
-						<FormLabel color="white" fontWeight="bold">
+						<FormLabel color='white' fontWeight='bold'>
 							Value:
 						</FormLabel>
 						<InputType
@@ -121,7 +127,7 @@ export default function Form() {
 				>
 					+
 				</Button> */}
-				<Box textAlign="center">
+				<Box textAlign='center'>
 					{/* <VStack> */}
 					{/* <Button
 						type="submit"
@@ -136,12 +142,12 @@ export default function Form() {
 						UPLOAD
 					</Button> */}
 					<Button
-						type="submit"
-						title="Save to Tableland"
-						background="#FF6467"
-						size="md"
-						color="white"
-						boxShadow="0 4px 4px 0px #000"
+						type='submit'
+						title='Save to Tableland'
+						background='#FF6467'
+						size='md'
+						color='white'
+						boxShadow='0 4px 4px 0px #000'
 						my={5}
 						isDisabled={!values.parameter || !values.value}
 						onClick={ConnectTableland().connect}
@@ -167,8 +173,8 @@ export function ConnectTableland() {
 	return {
 		async connect() {
 			const tableland = await connect({
-				network: "testnet",
-				chain: "polygon-mumbai",
+				network: 'testnet',
+				chain: 'polygon-mumbai',
 			});
 
 			await tableland.siwe();
