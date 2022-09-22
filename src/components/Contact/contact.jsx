@@ -20,7 +20,7 @@ export default function Contact() {
 						</Heading>
 					</VStack>
 					<Spacer />
-					<VStack w={{ md: '55%' }} justify="center" spacing={3} bg="#464549" borderRadius={20} py={20} px={10} maxW="460">
+					<VStack w={{ md: '55%' }} justify="center" spacing={3} bg="#464549" borderRadius={"8px"} py={20} px={10} maxW="460">
 						<Heading color="#FF6467" size="lg" paddingBottom={5}>
 							What's your question?
 						</Heading>

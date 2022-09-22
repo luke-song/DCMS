@@ -53,7 +53,11 @@ export default function Who() {
             Akshat Giri
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests?
+            Software Engineer
+          </h1>
+          <br />
+          <h1>
+            Full stack developer who focuses on writing clean, elegant and efficient code.
           </h1>
         </Container>
       </SimpleGrid>
@@ -86,13 +90,12 @@ export default function Who() {
             Luke Song
           </Heading>
           <h1>
-            Software Engineering Student at San Jose State University, graduates
-            2023.
+            Software Engineering Student at San Jose State University
           </h1>
           <br />
           <h1>
-            Have a passion for web development and building applications from
-            the ground up! Specialize mainly in web architecture and full-stack
+            Has a passion for web development and building applications from
+            the ground up! Specializes in mainly web architecture and full-stack
             development.
           </h1>
         </Container>
@@ -153,7 +156,11 @@ export default function Who() {
             Andrew Bustos
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests?
+            Software Engineer
+          </h1>
+          <br />
+          <h1>
+            Frontend web developer specializing in the MERN tech stack. Actively growing as a problem solver and I look forward to new tech opportunities.
           </h1>
         </Container>
       </SimpleGrid>
@@ -186,10 +193,11 @@ export default function Who() {
             Jimin Song
           </Heading>
           <h1>
-            Software Engineer.
+            Software Engineer
           </h1>
+          <br />
           <h1>
-           A data-enthusiastic and highly motivated engineer
+            A data-enthusiastic and highly motivated engineer.
           </h1>
         </Container>
         <Image

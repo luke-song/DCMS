@@ -52,6 +52,7 @@ export default function Upload() {
 						spacing={3}
 						style={{
 							border: 'solid',
+							color: '#464549'
 						}}
 						borderRadius={8}
 						p={10}
@@ -83,7 +84,7 @@ export default function Upload() {
 							justify='center'
 							spacing={3}
 							bg='#464549'
-							borderRadius={20}
+							borderRadius={"8px"}
 							p={10}
 							mt={20}
 						>

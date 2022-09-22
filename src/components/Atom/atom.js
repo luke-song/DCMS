@@ -7,7 +7,6 @@ export const formState = atom({
 			parameter: '',
 			type: '',
 			value: '',
-			pairs: [],
 		},
 	],
 });
@@ -29,7 +28,6 @@ export const jsonState = atom({
 			parameter: '',
 			type: '',
 			value: '',
-			pairs: [],
 		},
 	],
 });
