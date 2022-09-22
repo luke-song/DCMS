@@ -189,7 +189,12 @@ export default function Who() {
             Jimin Song
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests? 
+            Software Engineering Student at San Jose State University, graduates
+            2023.
+          </h1>
+          <br/>
+          <h1>
+          A data-enthusiastic and highly motivated engineer. I am committed to working towards the overall's success with a positive attitude, always willing to learn and contribute to the team in order to deliver valuable insights through data retrieval and analytical knowledge.
           </h1>
         </Container>
         <Image
