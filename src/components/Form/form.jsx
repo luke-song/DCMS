@@ -7,7 +7,7 @@ import { Buffer } from 'buffer';
 import { useQuery } from '@tanstack/react-query';
 import { useMoralis } from 'react-moralis';
 import axios from 'axios';
-import { Text } from '@chakra-ui/react';
+import { Text, Flex, HStack, VStack, Box } from '@chakra-ui/react';
 window.Buffer = Buffer;
 
 /**
@@ -43,6 +43,7 @@ function FormValueSelector({ propertyData, handleChange, onDelete }) {
 				flexDirection: 'row',
 				width: '100%',
 				gap: '.5rem',
+				margin: "5px"
 			}}
 		>
 			<CMSInput
@@ -64,7 +65,7 @@ function FormValueSelector({ propertyData, handleChange, onDelete }) {
 					borderRadius: '8px',
 					border: 'none',
 					color: 'white',
-					padding: '1px',
+					padding: '5px',
 					fontWeight: '600',
 					fontSize: '1rem',
 					boxShadow: '0px 3px 4px gray',
@@ -130,80 +131,83 @@ export default function Form() {
 	}, [isInitialized, Moralis.User]);
 
 	return (
-		<>
-			{formState.map((propertyData, index) => (
-				<FormValueSelector
-					handleChange={(updatedPropertyData) => {
-						setFormState((prevState) => {
-							const newState = [...prevState];
-							newState[index] = updatedPropertyData;
-							return newState;
-						});
+		<Flex>
+			<VStack>
+				<Box>
+					{formState.map((propertyData, index) => (
+						<FormValueSelector
+							handleChange={(updatedPropertyData) => {
+								setFormState((prevState) => {
+									const newState = [...prevState];
+									newState[index] = updatedPropertyData;
+									return newState;
+								});
+							}}
+							key={propertyData.id}
+							propertyData={propertyData}
+							onDelete={() => {
+								console.log(index);
+								setFormState(removeItemAtIndex(formState, index));
+							}}
+						/>
+					))}
+				</Box>
+				<CMSButton
+					style={{
+						backgroundColor: '#FF6447',
+						borderRadius: '8px',
+						border: 'none',
+						color: 'white',
+						padding: '10px 15px',
+						fontWeight: '600',
+						fontSize: '1.2rem',
 					}}
-					key={propertyData.id}
-					propertyData={propertyData}
-					onDelete={() => {
-						console.log(index);
-						setFormState(removeItemAtIndex(formState, index));
+					onClick={() => {
+						error && setError(false);
+						setFormState([
+							...formState,
+							{
+								name: '',
+								type: PropertyType.STRING,
+								value: '',
+								id: uuidv4(),
+							},
+						]);
 					}}
-				/>
-			))}
-			<CMSButton
-				style={{
-					backgroundColor: '#FF6447',
-					borderRadius: '8px',
-					border: 'none',
-					color: 'white',
-					padding: '7px 15px',
-					fontWeight: '600',
-					fontSize: '1.2rem',
-				}}
-				onClick={() => {
-					error && setError(false);
-					setFormState([
-						...formState,
-						{
-							name: '',
-							type: PropertyType.STRING,
-							value: '',
-							id: uuidv4(),
-						},
-					]);
-				}}
-			>
-				+
-			</CMSButton>
-			<CMSButton
-				style={{
-					backgroundColor: '#FF6447',
-					borderRadius: '8px',
-					border: 'none',
-					color: 'white',
-					padding: '10px 15px',
-					fontWeight: '600',
-					fontSize: '1.2rem',
-				}}
-				onClick={async () => {
-					try {
-						if (formState.length === 0) {
-							setError(true);
-							return;
-						} else setError(false);
-
-						insertData(uuidv4(), user.get('ethAddress'), formState);
-					} catch (e) {
-						console.log(e);
-					}
-				}}
-			>
-				Submit
-			</CMSButton>
-			{error && (
-				<Text>
-					Please add at least one set of fields before submitting.
-				</Text>
-			)}
-		</>
+				>
+					Add Entry
+				</CMSButton>
+				<CMSButton
+					style={{
+						backgroundColor: '#FF6447',
+						borderRadius: '8px',
+						border: 'none',
+						color: 'white',
+						padding: '10px 15px',
+						fontWeight: '600',
+						fontSize: '1.2rem',
+					}}
+					onClick={async () => {
+						try {
+							if (formState.length === 0) {
+								setError(true);
+								return;
+							} else setError(false);
+							insertData(uuidv4(), user.get('ethAddress'), formState);
+						} catch (e) {
+							console.log(e);
+						}
+					}}
+				>
+					Submit
+				</CMSButton>
+				{error && (
+					<Text>
+						Please add at least one set of fields before submitting.
+					</Text>
+				)}
+			</VStack>
+		</Flex>
 	);
 }
 

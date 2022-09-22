@@ -4,7 +4,7 @@ import {
 	SimpleGrid,
 	Divider,
 	Image,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react"
 
 export default function Who() {
 	return (
@@ -36,7 +36,7 @@ export default function Who() {
 					marginLeft={1}
 				/>
 				<Container
-					fontFamily={'chicago'}
+					fontFamily={"chicago"}
 					backgroundColor=''
 					textColor='#464549'
 					padding='5'
@@ -44,7 +44,7 @@ export default function Who() {
 					fontSize={12}
 				>
 					<Heading
-						fontFamily={'chicago'}
+						fontFamily={"chicago"}
 						fontSize={22}
 						paddingBottom={4}
 						paddingTop={5}
@@ -52,9 +52,11 @@ export default function Who() {
 					>
 						Akshat Giri
 					</Heading>
+					<h1>Software Engineer</h1>
+					<br />
 					<h1>
-						Explain who you are. What do you do? What are your hobbies? What are
-						your interests?
+						Full stack developer who focuses on writing clean, elegant and
+						efficient code.
 					</h1>
 				</Container>
 			</SimpleGrid>
@@ -70,7 +72,7 @@ export default function Who() {
 				borderRadius={30}
 			>
 				<Container
-					fontFamily={'chicago'}
+					fontFamily={"chicago"}
 					backgroundColor=''
 					textColor='#464549'
 					padding='5'
@@ -78,7 +80,7 @@ export default function Who() {
 					fontSize={12}
 				>
 					<Heading
-						fontFamily={'chicago'}
+						fontFamily={"chicago"}
 						fontSize={22}
 						paddingBottom={4}
 						paddingTop={5}
@@ -86,14 +88,11 @@ export default function Who() {
 					>
 						Luke Song
 					</Heading>
-					<h1>
-						Software Engineering Student at San Jose State University, graduates
-						2023.
-					</h1>
+					<h1>Software Engineering Student at San Jose State University</h1>
 					<br />
 					<h1>
-						Have a passion for web development and building applications from
-						the ground up! Specialize mainly in web architecture and full-stack
+						Has a passion for web development and building applications from the
+						ground up! Specializes in mainly web architecture and full-stack
 						development.
 					</h1>
 				</Container>
@@ -137,7 +136,7 @@ export default function Who() {
 					marginLeft={1}
 				/>
 				<Container
-					fontFamily={'chicago'}
+					fontFamily={"chicago"}
 					backgroundColor=''
 					textColor='#464549'
 					padding='5'
@@ -145,7 +144,7 @@ export default function Who() {
 					fontSize={12}
 				>
 					<Heading
-						fontFamily={'chicago'}
+						fontFamily={"chicago"}
 						fontSize={22}
 						paddingBottom={4}
 						paddingTop={5}
@@ -153,11 +152,12 @@ export default function Who() {
 					>
 						Andrew Bustos
 					</Heading>
-					<h1>Computer Science Student @ CSU East Bay, graduating 2023.</h1>
+					<h1>Software Engineer</h1>
 					<br />
 					<h1>
-						I am a fullstack developer sepecializing in React and Express.
-						Currently grinding some leetcode to land a FAANG job!
+						Frontend web developer specializing in the MERN tech stack. Actively
+						growing as a problem solver and I look forward to new tech
+						opportunities.
 					</h1>
 				</Container>
 			</SimpleGrid>
@@ -173,7 +173,7 @@ export default function Who() {
 				borderRadius={30}
 			>
 				<Container
-					fontFamily={'chicago'}
+					fontFamily={"chicago"}
 					backgroundColor=''
 					textColor='#464549'
 					padding='5'
@@ -181,7 +181,7 @@ export default function Who() {
 					fontSize={12}
 				>
 					<Heading
-						fontFamily={'chicago'}
+						fontFamily={"chicago"}
 						fontSize={22}
 						paddingBottom={4}
 						paddingTop={5}
@@ -189,8 +189,9 @@ export default function Who() {
 					>
 						Jimin Song
 					</Heading>
-					<h1>Software Engineer.</h1>
-					<h1>A data-enthusiastic and highly motivated engineer</h1>
+					<h1>Software Engineer</h1>
+					<br />
+					<h1>A data-enthusiastic and highly motivated engineer.</h1>
 				</Container>
 				<Image
 					boxSize='250px'
@@ -231,7 +232,7 @@ export default function Who() {
 					marginLeft={1}
 				/>
 				<Container
-					fontFamily={'chicago'}
+					fontFamily={"chicago"}
 					backgroundColor=''
 					textColor='#464549'
 					padding='5'
@@ -239,7 +240,7 @@ export default function Who() {
 					fontSize={12}
 				>
 					<Heading
-						fontFamily={'chicago'}
+						fontFamily={"chicago"}
 						fontSize={22}
 						paddingBottom={4}
 						paddingTop={5}

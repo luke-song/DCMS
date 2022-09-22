@@ -27,7 +27,7 @@ export default function Navbar() {
             <HStack>
                 <Box p='2'>
                     <Link as={ReactLink} to='/'>
-                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> How it works </Text>
+                        <Text pt='1' size='sm' color='#FF6467' className={'hover'}> • How it works </Text>
                     </Link>
                 </Box>
                 <Box p='2'>
