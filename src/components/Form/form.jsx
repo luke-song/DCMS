@@ -6,10 +6,9 @@ import {
 	Button,
 	Box,
 	Select,
-	VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InputType from "./inputType";
 import { Buffer } from "buffer";
 import { connect } from "@tableland/sdk";
@@ -42,11 +41,11 @@ export default function Form() {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// setValues({
-		// 	parameter: "",
-		// 	value: "",
-		// 	pairs: []
-		// })
+		setValues({
+			parameter: "",
+			value: "",
+		})
+		setFile(false)
 		if (file) {
 			axios
 				.post(
@@ -86,9 +85,7 @@ export default function Form() {
 							sx={{ ":focus": { background: "white" } }}
 							variant="filled"
 						>
-							<option disabled value="">
-								Select Type
-							</option>
+							<option disabled selected value="">Select Type</option>
 							<option value="String">String</option>
 							<option value="Number">Number</option>
 							{/* <option value="array">Array</option>

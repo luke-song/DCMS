@@ -1,16 +1,13 @@
 import {
-    Box,
-    VStack,
-    Stack,
-    Container,
-    Heading,
-    SimpleGrid,
-    Divider,
-    Image,
-  } from "@chakra-ui/react";
+  Container,
+  Heading,
+  SimpleGrid,
+  Divider,
+  Image,
+} from "@chakra-ui/react";
 
 export default function Who() {
-	return (
+  return (
     <Container maxW="container.xl" centerContent="center">
       <Heading as="h3" fontSize="9xl" mb={4} textColor="#464549">
         Our Team
@@ -29,7 +26,7 @@ export default function Who() {
           boxSize="250px"
           objectFit="cover"
           padding="4"
-          src="/akshat.jpg"
+          src="/akshat.png"
           alt="Akshat"
           backgroundSize="500px"
           backgroundColor="white"
@@ -56,7 +53,7 @@ export default function Who() {
             Akshat Giri
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests? 
+            Explain who you are. What do you do? What are your hobbies? What are your interests?
           </h1>
         </Container>
       </SimpleGrid>
@@ -92,7 +89,7 @@ export default function Who() {
             Software Engineering Student at San Jose State University, graduates
             2023.
           </h1>
-          <br/>
+          <br />
           <h1>
             Have a passion for web development and building applications from
             the ground up! Specialize mainly in web architecture and full-stack
@@ -156,7 +153,7 @@ export default function Who() {
             Andrew Bustos
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests? 
+            Explain who you are. What do you do? What are your hobbies? What are your interests?
           </h1>
         </Container>
       </SimpleGrid>
@@ -189,7 +186,7 @@ export default function Who() {
             Jimin Song
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests? 
+            Explain who you are. What do you do? What are your hobbies? What are your interests?
           </h1>
         </Container>
         <Image
@@ -221,7 +218,7 @@ export default function Who() {
           boxSize="250px"
           objectFit="cover"
           padding="4"
-          src="/minjae.jpg"
+          src="/minjae.jpeg"
           alt="minjae"
           backgroundSize="500px"
           backgroundColor="white"
@@ -248,10 +245,15 @@ export default function Who() {
             Minjae Kwon
           </Heading>
           <h1>
-            Explain who you are. What do you do? What are your hobbies? What are your interests? 
+            Front End Developer
+          </h1>
+          <br />
+          <h1>
+            Focused on creating a great user experience on web-based applications.
+            Has experience in developing consumer-focused websites using React.
           </h1>
         </Container>
       </SimpleGrid>
     </Container>
-	);
+  );
 }
