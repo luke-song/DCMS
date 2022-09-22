@@ -1,206 +1,191 @@
-import {
-	FormControl,
-	FormLabel,
-	Input,
-	HStack,
-	Button,
-	Box,
-	Select,
-	VStack,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import InputType from './inputType';
-import { Buffer } from 'buffer';
-import { connect } from '@tableland/sdk';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-	formState,
-	fileState,
-	jsonState,
-	hashCode,
-	fileUriState,
-} from '../Atom/atom';
+import { useState } from 'react'
+import { connect } from '@tableland/sdk'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { formState, hashCode, jsonState } from '../Atom/atom'
+import CMSInput from '../CMSInput'
+import CMSButton from '../CMSButton'
+import { v4 as uuidv4 } from 'uuid'
+import { Buffer } from 'buffer'
+import { useQuery } from '@tanstack/react-query'
+window.Buffer = Buffer
 
-window.Buffer = Buffer;
+/**
+ *  An object with form data.
+ * eg.
+ *
+ * project_data: [
+ * 	{ parameter: 'name', type: 'String', value: 'John Doe' },
+ * 	{ parameter: 'user_avatar', type: 'File', value: 'file_url' },
+ * ],
+ * user_id: 'polygon_mumbai_address','
+ */
 
-export default function Form() {
-	const [values, setValues] = useRecoilState(formState);
-	const [file, setFile] = useRecoilState(fileState);
-	const [fileLink, setFileLink] = useRecoilState(fileUriState);
-	const handleChange = (e) => {
-		const { name, value, files } = e.target;
-		if (name !== 'type') {
-			setValues({
-				...values,
-				[name]: value,
-			});
-		} else {
-			setValues({
-				...values,
-				[name]: value,
-				value: '',
-			});
-		}
-		if (values.type === 'File') {
-			if (files) setFile(files[0]);
-		}
-	};
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setValues({
-			parameter: "",
-			value: "",
-		})
-		if (file) {
-			axios
-				.post(
-					'https://filecoin-uploader.herokuapp.com/uploads/upload',
-					{
-						file: file,
-					}
-				)
-				.then((res) => setFileLink(res))
-				.catch((err) => console.log(err));
-		}
-	};
-	return (
-		<div>
-			<form action='/' onSubmit={handleSubmit}>
-				<HStack>
-					<FormControl isRequired>
-						<FormLabel color='white' fontWeight='bold'>
-							Parameter:
-						</FormLabel>
-						<Input
-							name='parameter'
-							value={values.parameter}
-							onChange={handleChange}
-							sx={{ ':focus': { background: 'white' } }}
-							variant='filled'
-						/>
-					</FormControl>
-					<FormControl isRequired>
-						<FormLabel color='white' fontWeight='bold'>
-							Type:
-						</FormLabel>
-						<Select
-							name='type'
-							value={values.type}
-							onChange={handleChange}
-							sx={{ ':focus': { background: 'white' } }}
-							variant='filled'
-						>
-							<option disabled selected value="">Select Type</option>
-							<option value="String">String</option>
-							<option value="Number">Number</option>
-							{/* <option value="array">Array</option>
-							<option value="map">Map</option>
-							<option value="sset">Set</option> */}
-							<option value='File'>File</option>
-						</Select>
-					</FormControl>
-					<FormControl isRequired>
-						<FormLabel color='white' fontWeight='bold'>
-							Value:
-						</FormLabel>
-						<InputType
-							values={values}
-							handleChange={handleChange}
-						/>
-					</FormControl>
-				</HStack>
-				{/* <ul>
-					{values.pairs.map(pair => (
-						<li parameter={pair.parameter}>{pair.parameter} : {pair.value}</li>
-					))}
-				</ul>
-				<Button
-					type="submit"
-					title="Add a parameter-value pair"
-					bg="#FF6467"
-					color="white"
-					ml={"90%"}
-					boxShadow="0 4px 4px 0px #000"
-					my={5}
-					fontSize="lg"
-				>
-					+
-				</Button> */}
-				<Box textAlign='center'>
-					{/* <VStack> */}
-					{/* <Button
-						type="submit"
-						title="Submit to Filecoin"
-						background="#FF6467"
-						size="md"
-						color="white"
-						boxShadow="0 4px 4px 0px #000"
-						my={5}
-						isDisabled={!values.parameter || !values.value}
-					>
-						UPLOAD
-					</Button> */}
-					<Button
-						type='submit'
-						title='Save to Tableland'
-						background='#FF6467'
-						size='md'
-						color='white'
-						boxShadow='0 4px 4px 0px #000'
-						my={5}
-						isDisabled={!values.parameter || !values.value}
-						onClick={ConnectTableland().connect}
-					>
-						UPLOAD
-					</Button>
-					{/* </VStack> */}
-				</Box>
-			</form>
-		</div>
-	);
+const PropertyType = Object.freeze({ STRING: 'STRING', FILE: 'FILE' })
+
+function FormValueSelector({ propertyData, handleChange, onDelete }) {
+  const { name = '', type = PropertyType.STRING, value = '' } =
+    propertyData || {}
+  const [propertyType, setPropertyType] = useState(type)
+
+  const onChange = (e) => {
+    const { name, value, files } = e.target
+    handleChange({ ...propertyData, [name]: files ? files[0] : value })
+  }
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        gap: '1rem',
+      }}
+    >
+      <CMSInput
+        type="text"
+        name="name"
+        placeholder="property_name"
+        onChange={onChange}
+        defaultValue={name}
+      />
+      <select
+        name="type"
+        onChange={(e) => {
+          setPropertyType(e.target.value)
+          onChange(e)
+        }}
+        defaultValue={type}
+      >
+        <option value={PropertyType.STRING}>String</option>
+        <option value={PropertyType.FILE}>Image / File</option>
+      </select>
+      {propertyType === PropertyType.STRING && (
+        <CMSInput
+          onChange={onChange}
+          name="value"
+          type="text"
+          placeholder="property_value"
+          defaultValue={value}
+        />
+      )}
+      {propertyType === PropertyType.FILE && (
+        <CMSInput type="file" name="value" onChange={onChange} />
+      )}
+      <CMSButton onClick={onDelete}>Delete</CMSButton>
+    </div>
+  )
 }
 
-export function ConnectTableland() {
-	const values = useRecoilValue(formState);
+async function getUserPorjects(
+  wallet_address = '0x0000000000000000000000000000000000000000',
+) {
+  const tableland = await connect({
+    network: 'testnet',
+    chain: 'polygon-mumbai',
+  })
+  const res = await tableland.read(
+    `SELECT * FROM cms_table_80001_2622 WHERE user_id == "${wallet_address}";`,
+  )
+  return res.rows
+}
 
-	const setJsonData = useSetRecoilState(jsonState);
+export default function Form() {
+  const [formState, setFormState] = useState([])
+  const { data, isLoading, status } = useQuery(
+    ['project_count'],
+    getUserPorjects,
+  )
+  return (
+    <>
+      {formState.map((propertyData, index) => (
+        <FormValueSelector
+          handleChange={(updatedPropertyData) => {
+            setFormState((prevState) => {
+              const newState = [...prevState]
+              newState[index] = updatedPropertyData
+              return newState
+            })
+          }}
+          key={propertyData.id}
+          propertyData={propertyData}
+          onDelete={() => {
+            console.log(index)
+            setFormState(removeItemAtIndex(formState, index))
+          }}
+        />
+      ))}
+      <CMSButton
+        onClick={() => {
+          setFormState([
+            ...formState,
+            { name: '', type: PropertyType.STRING, value: '', id: uuidv4() },
+          ])
+        }}
+      >
+        +
+      </CMSButton>
+      <CMSButton
+        onClick={async () => {
+          try {
+            insertData(
+              uuidv4(),
+              '0x0000000000000000000000000000000000000000',
+              formState,
+            )
+          } catch (e) {
+            console.log(e)
+          }
+        }}
+      >
+        Submit
+      </CMSButton>
+    </>
+  )
+}
 
-	const setHash = useSetRecoilState(hashCode);
+function removeItemAtIndex(arr, index) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)]
+}
 
-	// console.log(values.parameter, values.value, values.type);
+async function insertData(projectId, userId, formData) {
+  const tableland = await connect({
+    network: 'testnet',
+    chain: 'polygon-mumbai',
+  })
+  console.log('tableland: ', tableland)
+  const signature = await tableland.siwe()
+  console.log('signature: ', signature)
 
-	return {
-		async connect() {
-			const tableland = await connect({
-				network: 'testnet',
-				chain: 'polygon-mumbai',
-			});
+  const tableName = `cms_table_80001_2622`
 
-			await tableland.siwe();
+  const writeRes = await tableland.write(
+    `INSERT INTO ${tableName} (id, user_id, project_data) VALUES ('${projectId}', '${userId}', '${JSON.stringify(
+      formData,
+    )}');`,
+  )
 
-			const { name } = await tableland.create(
-				`parameter text primary key, type text, value text`,
-				{
-					prefix: `my_cms_table`,
-				}
-			);
+  console.log(writeRes)
+}
 
-			console.log(name);
+async function readData() {
+  const tableland = await connect({
+    network: 'testnet',
+    chain: 'polygon-mumbai',
+  })
+  const readRes = await tableland.read(`SELECT * FROM cms_table_80001_2622;`)
+}
 
-			const writeRes = await tableland.write(
-				`INSERT INTO ${name} (parameter, type, value) VALUES ('${values.parameter}', '${values.type}', '${values.value}');`
-			);
-
-			console.log(writeRes);
-
-			setHash(writeRes);
-
-			const readRes = await tableland.read(`SELECT * FROM ${name};`);
-
-			console.log(readRes);
-
-			setJsonData(readRes);
-		},
-	};
+async function createTableLandTable() {
+  const tableland = await connect({
+    network: 'testnet',
+    chain: 'polygon-mumbai',
+  })
+  await tableland.siwe()
+  const { name } = await tableland.create(
+    `id text, user_id text, project_data text, primary key (id)`,
+    {
+      prefix: `cms_table`,
+    },
+  )
+  console.log(name)
 }
