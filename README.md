@@ -1,5 +1,7 @@
 ### CMS-ON-CHAIN
 
+*Moralis Hackathon 2022 Filecoin Prize Winner* 
+
 Imagine a place where your contents do not disappear
 
 https://github.com/luke-song/cms-on-chain/blob/e146d6e9cd01e0efc21086754594b3b294dce647/src/components/Navbar/navbar.jsx#L1-L74
