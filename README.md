@@ -1,12 +1,12 @@
-# CMS-on-Chain
+# DCMS
 
 *Moralis Hackathon 2022 Filecoin Prize Winner* 
 
-CMS-on-Chain is a decentralized content management system (CMS) built on the blockchain. This repository contains the source code for the CMS-on-Chain project.
+DCMS is a decentralized content management system (CMS) built on the blockchain. This repository contains the source code for the CMS-on-Chain project.
 
 ## Installation
 
-To install CMS-on-Chain, follow these steps:
+To install DCMS, follow these steps:
 
 1. Clone the repository:
 
