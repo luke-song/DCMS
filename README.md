@@ -2,7 +2,7 @@
 
 *Moralis Hackathon 2022 Filecoin Prize Winner* 
 
-DCMS is a decentralized content management system (CMS) built on the blockchain. This repository contains the source code for the CMS-on-Chain project.
+DCMS is a decentralized content management system (CMS) built on the blockchain. This repository contains the source code for the DCMS project.
 
 ## Installation
 
@@ -28,7 +28,7 @@ To install DCMS, follow these steps:
 
 ## Usage
 
-To use CMS-on-Chain, you need to configure and start the application. Follow these steps to get started:
+To use DCMS, you need to configure and start the application. Follow these steps to get started:
 
 1. Create a configuration file:
 
@@ -48,7 +48,7 @@ To use CMS-on-Chain, you need to configure and start the application. Follow the
 
 ## Architecture
 
-The CMS-on-Chain project follows a client-server architecture. The server is built using Node.js and Express.js, while the client is built using React.js.
+The DCMS project follows a client-server architecture. The server is built using Node.js and Express.js, while the client is built using React.js.
 
 ### Server
 
